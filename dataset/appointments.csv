@@ -1,0 +1,11 @@
+appointment_id,reminder_sent,previous_no_shows,waiting_days,status
+1,1,0,2,Show
+2,1,0,3,Show
+3,0,2,7,No Show
+4,0,3,10,No Show
+5,1,1,5,Show
+6,0,1,8,No Show
+7,1,0,1,Show
+8,0,4,15,No Show
+9,1,2,8,No Show
+10,1,0,4,Show

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>No-Show Prediction</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #203a43;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #2c5364;
+            padding: 9px 16px;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #203a43;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #203a43;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2c5364;
+        }
+
+        .result {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            background: #f1f8ff;
+        }
+
+        .probability {
+            font-size: 40px;
+            font-weight: bold;
+            color: #203a43;
+            margin: 15px 0;
+        }
+
+        .risk {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .low {
+            color: green;
+        }
+
+        .medium {
+            color: orange;
+        }
+
+        .high {
+            color: red;
+        }
+
+        .info {
+            margin-top: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>Healthcare Appointment System</h2>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="box">
+
+        <h1>No-Show Prediction</h1>
+
+        <p class="description">
+            Enter appointment-related information to predict the probability
+            that the patient will miss the appointment.
+        </p>
+
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label>Reminder Sent</label>
+
+                <select name="reminder_sent" required>
+
+                    <option value="">Select Option</option>
+
+                    <option value="1">
+                        Yes
+                    </option>
+
+                    <option value="0">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Previous No-Shows</label>
+
+                <input
+                    type="number"
+                    name="previous_no_shows"
+                    min="0"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Waiting Days</label>
+
+                <input
+                    type="number"
+                    name="waiting_days"
+                    min="0"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit">
+                Predict No-Show Risk
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if probability is defined %}
+
+    <div class="box">
+
+        <div class="result">
+
+            <h2>Prediction Result</h2>
+
+            <div class="probability">
+                {{ "%.2f"|format(probability * 100) }}%
+            </div>
+
+            <p>
+                No-Show Probability
+            </p>
+
+
+            {% if risk_level == "High" %}
+
+                <div class="risk high">
+                    High Risk
+                </div>
+
+            {% elif risk_level == "Medium" %}
+
+                <div class="risk medium">
+                    Medium Risk
+                </div>
+
+            {% else %}
+
+                <div class="risk low">
+                    Low Risk
+                </div>
+
+            {% endif %}
+
+
+            <div class="info">
+
+                <p>
+                    This prediction is based on reminder status,
+                    previous no-shows and waiting days.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

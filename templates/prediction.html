@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>No Show Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav>
+    <h2>Healthcare Analytics</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/patients">Patients</a>
+        <a href="/doctors">Doctors</a>
+        <a href="/appointments">Appointments</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+
+<h1>No-Show Prediction</h1>
+
+<form method="POST" class="form-box">
+
+    <label>Appointment</label>
+
+    <select name="appointment_id" required>
+
+        <option value="">Select Appointment</option>
+
+        {% for appointment in appointments %}
+
+        <option value="{{ appointment.appointment_id }}">
+
+            #{{ appointment.appointment_id }}
+            -
+            {{ appointment.patient_name }}
+            -
+            Dr. {{ appointment.doctor_name }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <label>Reminder Sent</label>
+
+    <select name="reminder_sent">
+
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+
+    </select>
+
+
+    <label>Previous No Shows</label>
+
+    <input
+        type="number"
+        name="previous_no_shows"
+        value="0"
+        min="0"
+        required
+    >
+
+
+    <label>Waiting Days</label>
+
+    <input
+        type="number"
+        name="waiting_days"
+        value="0"
+        min="0"
+        required
+    >
+
+
+    <button type="submit">
+        Predict No-Show Risk
+    </button>
+
+</form>
+
+
+{% if result %}
+
+<div class="prediction-result">
+
+    <h2>Prediction Result</h2>
+
+    <h3>
+        No-Show Probability:
+        {{ result.probability }}%
+    </h3>
+
+    <h3>
+        Risk Level:
+        {{ result.risk }}
+    </h3>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointments</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav>
+    <h2>Healthcare Analytics</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/patients">Patients</a>
+        <a href="/doctors">Doctors</a>
+        <a href="/appointments">Appointments</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+
+<h1>Appointment Booking</h1>
+
+<form method="POST" class="form-box">
+
+    <label>Patient</label>
+
+    <select name="patient_id" required>
+
+        <option value="">Select Patient</option>
+
+        {% for patient in patients %}
+
+        <option value="{{ patient.patient_id }}">
+            {{ patient.name }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <label>Doctor</label>
+
+    <select name="doctor_id" required>
+
+        <option value="">Select Doctor</option>
+
+        {% for doctor in doctors %}
+
+        <option value="{{ doctor.doctor_id }}">
+            {{ doctor.name }} - {{ doctor.specialization }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <label>Date</label>
+
+    <input
+        type="date"
+        name="appointment_date"
+        required
+    >
+
+
+    <label>Time</label>
+
+    <input
+        type="time"
+        name="appointment_time"
+        required
+    >
+
+
+    <label>Reminder Sent?</label>
+
+    <select name="reminder_sent">
+
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+
+    </select>
+
+
+    <label>Previous No Shows</label>
+
+    <input
+        type="number"
+        name="previous_no_shows"
+        value="0"
+        min="0"
+    >
+
+
+    <label>Waiting Days</label>
+
+    <input
+        type="number"
+        name="waiting_days"
+        value="0"
+        min="0"
+    >
+
+
+    <button type="submit">
+        Book Appointment
+    </button>
+
+</form>
+
+
+<h2>Appointment List</h2>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Patient</th>
+    <th>Doctor</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Status</th>
+</tr>
+
+{% for appointment in appointments %}
+
+<tr>
+
+    <td>{{ appointment.appointment_id }}</td>
+
+    <td>{{ appointment.patient_name }}</td>
+
+    <td>{{ appointment.doctor_name }}</td>
+
+    <td>{{ appointment.appointment_date }}</td>
+
+    <td>{{ appointment.appointment_time }}</td>
+
+    <td>{{ appointment.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

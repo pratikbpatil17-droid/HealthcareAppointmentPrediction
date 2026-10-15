@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctors - Healthcare System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #203a43;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #2c5364;
+            padding: 9px 16px;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        h1, h2 {
+            color: #203a43;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #203a43;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2c5364;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #203a43;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        @media(max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Healthcare Appointment System</h2>
+    <a href="/dashboard">Dashboard</a>
+</div>
+
+<div class="container">
+
+    <!-- Add Doctor -->
+    <div class="box">
+
+        <h1>Doctor Management</h1>
+
+        <form method="POST">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Doctor Name</label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter doctor name"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Specialization</label>
+
+                    <input
+                        type="text"
+                        name="specialization"
+                        placeholder="e.g. Cardiologist"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Department</label>
+
+                    <input
+                        type="text"
+                        name="department"
+                        placeholder="e.g. Cardiology"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <button type="submit">
+                Add Doctor
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Doctor Records -->
+
+    <div class="box">
+
+        <h2>Doctor Records</h2>
+
+        {% if doctors %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for doctor in doctors %}
+
+                <tr>
+
+                    <td>
+                        {{ doctor["doctor_id"] }}
+                    </td>
+
+                    <td>
+                        {{ doctor["name"] }}
+                    </td>
+
+                    <td>
+                        {{ doctor["specialization"] }}
+                    </td>
+
+                    <td>
+                        {{ doctor["department"] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No doctors added yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

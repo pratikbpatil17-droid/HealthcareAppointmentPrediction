@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Appointments - Healthcare System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #203a43;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #2c5364;
+            padding: 9px 16px;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        h1, h2 {
+            color: #203a43;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #203a43;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2c5364;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #203a43;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        @media(max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Healthcare Appointment System</h2>
+    <a href="/dashboard">Dashboard</a>
+</div>
+
+<div class="container">
+
+    <!-- Add Appointment -->
+    <div class="box">
+
+        <h1>Appointment Management</h1>
+
+        <form method="POST">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Patient</label>
+
+                    <select name="patient_id" required>
+                        <option value="">Select Patient</option>
+
+                        {% for patient in patients %}
+                        <option value="{{ patient['patient_id'] }}">
+                            {{ patient['name'] }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label>Doctor</label>
+
+                    <select name="doctor_id" required>
+                        <option value="">Select Doctor</option>
+
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor['doctor_id'] }}">
+                            {{ doctor['name'] }} - {{ doctor['specialization'] }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label>Appointment Date</label>
+
+                    <input
+                        type="date"
+                        name="appointment_date"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label>Appointment Time</label>
+
+                    <input
+                        type="time"
+                        name="appointment_time"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label>Reminder Sent</label>
+
+                    <select name="reminder_sent" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <label>Previous No-Shows</label>
+
+                    <input
+                        type="number"
+                        name="previous_no_shows"
+                        min="0"
+                        value="0"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label>Waiting Days</label>
+
+                    <input
+                        type="number"
+                        name="waiting_days"
+                        min="0"
+                        value="0"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <button type="submit">
+                Book Appointment
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Appointment Records -->
+
+    <div class="box">
+
+        <h2>Appointment Records</h2>
+
+        {% if appointments %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for appointment in appointments %}
+
+                <tr>
+
+                    <td>
+                        {{ appointment["appointment_id"] }}
+                    </td>
+
+                    <td>
+                        {{ appointment["patient_name"] }}
+                    </td>
+
+                    <td>
+                        {{ appointment["doctor_name"] }}
+                    </td>
+
+                    <td>
+                        {{ appointment["appointment_date"] }}
+                    </td>
+
+                    <td>
+                        {{ appointment["appointment_time"] }}
+                    </td>
+
+                    <td>
+                        {{ appointment["status"] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No appointments added yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

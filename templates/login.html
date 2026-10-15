@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthcare Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-page">
+
+<div class="login-box">
+
+    <h1>Healthcare System</h1>
+    <p>Appointment Analytics & Prediction</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p class="login-info">
+        Username: admin<br>
+        Password: admin123
+    </p>
+
+</div>
+
+</body>
+</html>

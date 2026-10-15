@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav>
+    <h2>Healthcare Analytics</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/patients">Patients</a>
+        <a href="/doctors">Doctors</a>
+        <a href="/appointments">Appointments</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+
+<h1>Doctor Management</h1>
+
+<form method="POST" class="form-box">
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Doctor Name"
+        required
+    >
+
+    <input
+        type="text"
+        name="specialization"
+        placeholder="Specialization"
+        required
+    >
+
+    <input
+        type="text"
+        name="department"
+        placeholder="Department"
+        required
+    >
+
+    <button type="submit">Add Doctor</button>
+
+</form>
+
+<h2>Doctor List</h2>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Specialization</th>
+    <th>Department</th>
+</tr>
+
+{% for doctor in doctors %}
+
+<tr>
+    <td>{{ doctor.doctor_id }}</td>
+    <td>{{ doctor.name }}</td>
+    <td>{{ doctor.specialization }}</td>
+    <td>{{ doctor.department }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

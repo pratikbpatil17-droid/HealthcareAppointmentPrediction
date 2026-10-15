@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav>
+    <h2>Healthcare Analytics</h2>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/patients">Patients</a>
+        <a href="/doctors">Doctors</a>
+        <a href="/appointments">Appointments</a>
+        <a href="/prediction">Prediction</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+
+<h1>Patient Registration</h1>
+
+<form method="POST" class="form-box">
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Patient Name"
+        required
+    >
+
+    <input
+        type="number"
+        name="age"
+        placeholder="Age"
+        required
+    >
+
+    <select name="gender" required>
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+
+    <input
+        type="text"
+        name="phone"
+        placeholder="Phone Number"
+        required
+    >
+
+    <button type="submit">Add Patient</button>
+
+</form>
+
+<h2>Patient List</h2>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Gender</th>
+    <th>Phone</th>
+</tr>
+
+{% for patient in patients %}
+
+<tr>
+    <td>{{ patient.patient_id }}</td>
+    <td>{{ patient.name }}</td>
+    <td>{{ patient.age }}</td>
+    <td>{{ patient.gender }}</td>
+    <td>{{ patient.phone }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>
